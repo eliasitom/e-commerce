@@ -1,0 +1,19 @@
+.promotions-container {
+    margin-top: 80px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.promotions-title {
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.3);
+  
+    margin: 0;
+}

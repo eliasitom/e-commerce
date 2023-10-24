@@ -1,0 +1,58 @@
+.promotion-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 50%;
+}
+.promotion-item-img {
+    width: 270px;
+    height: 270px;
+    object-fit: contain;
+}
+.promotion-item div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-left: 15px;
+}
+.promotion-item-title, .promotion-item-description {
+    width: 500px;
+    margin: 0;
+    text-align: left;
+}
+.promotion-item .button-component {
+    position: relative;
+    left: -20px;
+}
+
+
+
+
+
+@media only screen and (max-width: 800px) {
+    .promotion-item {
+        flex-direction: column;
+
+        width: 90%;
+        margin: 15px 0 15px 0;
+    }
+    .promotion-item div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        margin: 0;
+    }
+    .promotion-item-title, .promotion-item-description {
+        width: auto;
+        margin: 0;
+        text-align: center;
+    }
+    .promotion-item .button-component {
+        position: relative;
+        left: 0;
+    }
+  }

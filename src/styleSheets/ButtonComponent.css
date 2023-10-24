@@ -1,0 +1,41 @@
+.button-component {
+  width: 200px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(226, 226, 226);
+
+  cursor: pointer;
+}
+.button-component p {
+  font-size: 18px;
+}
+
+.button-component:hover {
+  animation-name: button-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.button-component:not(:hover) {
+    animation-name: button-not-hover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+@keyframes button-hover {
+  0% {
+    background-color: rgb(226, 226, 226);
+}
+  100% {
+    background-color: rgb(189, 189, 189);
+}
+}
+@keyframes button-not-hover {
+  0% {
+    background-color: rgb(189, 189, 189);
+}
+  100% {
+    background-color: rgb(226, 226, 226);
+}
+}

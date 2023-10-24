@@ -1,0 +1,142 @@
+
+.product-page {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-page header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    width: 100%;
+    height: 70px;
+    margin-bottom: 50px;
+  
+    background-color: rgb(226, 226, 226);
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+}
+.product-page-main-div {
+    width: 90%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.product-page-data {
+    display: flex;
+    flex-direction: column;
+
+    width: 40%;
+}
+.product-page-main-data {
+    display: flex;
+}
+
+.product-page header h1 {
+    margin-left: 40px;
+}
+
+.product-page-main-data div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.product-page-main-data img {
+    width: 300px;
+}
+.product-price {
+    margin: 10px 0 10px 0;
+
+    font-size: 22px;
+}
+.product-description {
+    margin-top: 20px;
+}
+
+.product-characteristics {
+    display: flex;
+
+    margin-top: 50px;
+}
+
+
+/* ANOTHER PRODUCTS */
+
+.another-products {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    width: 40%;
+    margin-left: auto;
+}
+.another-products-title {
+    font-size: 28px;
+    color: rgba(0, 0, 0, 0.3);
+
+    margin-left: 15px;
+}
+.another-products-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+    .product-page h1 {
+        margin: 0 !important;
+        width: 100%;
+        text-align: center;
+    }
+    .product-page-main-div {
+        flex-direction: column;
+    }
+
+    .product-page-data {
+        width: 95%;
+    }
+    .product-page-main-data {
+        flex-direction: column;
+    }
+    .product-page-main-data div {
+        align-items: center;
+        margin-left: 0;
+    }
+    .product-page-main-data h2 {
+        text-align: center;
+    }
+    .product-characteristics {
+        display: flex;
+
+        margin-top: 50px;
+    }
+
+
+    .another-products {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    
+        width: 95%;
+        margin-left: 0;
+        margin-top: 30px;
+    }
+    .another-products-title {
+        font-size: 28px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.3);
+    
+        margin-left: 0;
+    }
+    .another-products-container {
+        justify-content: center;
+    }
+}

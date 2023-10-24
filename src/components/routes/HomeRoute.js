@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+import "../../styleSheets/routes/HomeRoute.css";
 
 import Browser from "./components/Browser"
 import NavBar from "./components/NavBar"
@@ -8,7 +8,7 @@ import TopProduct from "./components/TopProduct"
 
 import { HiBars3 } from "react-icons/hi2"
 
-function App() {
+function HomeRoute() {
   const [navEnabled, setNavEnabled] = useState(false)
 
   return (
@@ -55,4 +55,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomeRoute;

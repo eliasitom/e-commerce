@@ -1,0 +1,79 @@
+.admin-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+}
+
+.admin-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 70px;
+  margin-bottom: 50px;
+
+  background-color: rgb(226, 226, 226);
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+}
+.admin-panel-header div {
+  margin-right: 80px;
+}
+.admin-panel-header h2 {
+  margin-left: 80px;
+}
+
+/* create product button */
+
+.admin-create-product-button {
+  font-size: 22px;
+  padding: 5px 10px 5px 10px;
+
+  cursor: pointer;
+  background-color: white;
+  border-radius: 10px;
+}
+.admin-create-product-button:hover {
+  animation-name: create-product-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.admin-create-product-button:not(:hover) {
+  animation-name: create-product-not-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes create-product-hover {
+  0% {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.278);
+  }
+  100% {
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
+    background-color: rgb(226, 226, 226);
+  }
+}
+@keyframes create-product-not-hover {
+  0% {
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
+    background-color: rgb(226, 226, 226);
+  }
+  100% {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.278);
+  }
+}
+
+.admin-panel-products-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  width: 90%;
+  margin-bottom: 20px;
+}
