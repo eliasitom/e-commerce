@@ -12,26 +12,11 @@ import ProductItem from "../ProductItem";
 
 
 
-const SorterItem = ({ sorterData, categoryName, pullSorter_ }) => {
-  const [data, setData] = useState(sorterData);
+const SorterItem = ({ sorterData, pullSorter, pullSorterValue, pushSorterValue }) => {
 
   const [newValue, setNewValue] = useState("");
-  const [addedValues, setAddedValues] = useState([]);
 
   const [confirmMode, setConfirmMode] = useState(false);
-
-  const pushFilterValue = (sorterName) => {
-    fetch("http://localhost:8000/api/create_category_filter_value", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ categoryName, sorterName, newValue }),
-    })
-      .then(() => {
-        setNewValue("")
-        setAddedValues((prev) => [...prev, newValue]);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const confirmTimeOut = () => {
     let timer = 3;
@@ -47,26 +32,6 @@ const SorterItem = ({ sorterData, categoryName, pullSorter_ }) => {
     }, 1000);
   };
 
-  const pullFilterValue = (sorterName, value) => {
-    fetch("http://localhost:8000/api/remove_category_filter_value", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ categoryName, sorterName, sorterValue: value }),
-    })
-      .then(() => {
-        let newData = data;
-        newData.sorterValues = newData.sorterValues.filter(
-          (current) => current !== value
-        );
-        setData(newData);
-
-        let newAddedValues = addedValues.filter((current) => current !== value);
-        setAddedValues(newAddedValues);
-      })
-      .catch((err) => console.log(err));
-
-    setNewValue("");
-  };
 
   return (
     <div className="sorter-item">
@@ -74,13 +39,13 @@ const SorterItem = ({ sorterData, categoryName, pullSorter_ }) => {
       <div className="sorter-item-header">
         <p
           data-tooltip-id="my-tooltip"
-          data-tooltip-content={data.sorterName}
+          data-tooltip-content={sorterData.sorterName}
           data-tooltip-place="top"
         >
-          {data.sorterName}
+          {sorterData.sorterName}
         </p>
         {confirmMode ? (
-          <button className="sorter-item-confirm" onClick={() => pullSorter_(data.sorterName)}>
+          <button className="sorter-item-confirm" onClick={() => pullSorter(sorterData.sorterName)}>
             confirmar
           </button>
         ) : (
@@ -94,24 +59,12 @@ const SorterItem = ({ sorterData, categoryName, pullSorter_ }) => {
         )}
       </div>
       <div className="sorter-item-values">
-        {data.sorterValues.map((current, index) => (
+        {sorterData.sorterValues.map((current, index) => (
           <div key={index} className="sorter-item-value">
             <p>{current}</p>
             <button
               className="remove-characteristic-button"
-              onClick={() => pullFilterValue(data.sorterName, current)}
-            >
-              {" "}
-              ×{" "}
-            </button>
-          </div>
-        ))}
-        {addedValues.map((current, index) => (
-          <div key={index} className="sorter-item-value">
-            <p>{current}</p>
-            <button
-              className="remove-characteristic-button"
-              onClick={() => pullFilterValue(data.sorterName, current)}
+              onClick={() => pullSorterValue(sorterData.sorterName, current)}
             >
               {" "}
               ×{" "}
@@ -122,7 +75,8 @@ const SorterItem = ({ sorterData, categoryName, pullSorter_ }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          pushFilterValue(data.sorterName);
+          pushSorterValue(sorterData.sorterName, newValue);
+          setNewValue("")
         }}
       >
         <input
@@ -197,12 +151,27 @@ const EditCategoryRoute = () => {
       .catch((err) => console.log(err));
   }, []);
 
+
+
   const pushSorter = (sorterName) => {
     // JSON.parse(JSON.stringify(object)) es la forma correcta de clonar un objeto y no crear una referencia
     let newCategoryData = JSON.parse(JSON.stringify(categoryData));
     
     newCategoryData.sorters.push({sorterName, sorterValues: []})
     setCategoryData(newCategoryData)
+  }
+  const pushSorterValue = (sorterName, newValue) => {
+    fetch("http://localhost:8000/api/create_category_filter_value", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({categoryName, sorterName, newValue})
+    })
+    .then(response => response.json())
+    .then((res) => {
+      console.log(res)
+      setCategoryData(res.categoryData)
+    })
+    .catch((error) => console.log(error));
   }
 
   const pullSorter = (sorterName) => {
@@ -211,26 +180,24 @@ const EditCategoryRoute = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({sorterName_: sorterName, categoryName: categoryData.name})
     })
-    .then(() => {
-      // JSON.parse(JSON.stringify(object)) es la forma correcta de clonar un objeto y no crear una referencia
-      let newCategoryData = JSON.parse(JSON.stringify(categoryData));
- 
-
-      /* ERROR: Al eliminar el primer filtro, por alguna razon se elimina el segundo, si se actualiza la pagina todo vuelve a 
-      la normalidad, ya que es un error del frontend. Ademas, el segundo filtro pierde todos sus valores, por ejemplo:
-      sorter1: {marca: [apple, samsung]} sorter2: {color: [rojo, negro]} 
-      -Elimino sorter1
-      -Se re-renderiza la pagina y ahora solo se renderiza sorter1 (el filtro que elimine)
-      -al imprimir categoryData obtengo esto: sorter2: {color: []}
-      */
-      newCategoryData.sorters = newCategoryData.sorters.filter(
-        (current) => current.sorterName !== sorterName
-      );
-      
-      setCategoryData(newCategoryData.sorters);
+    .then(response => response.json())
+    .then((res) => {
+      setCategoryData(res.categoryData)
     })
     .catch((error) => console.log(error));
   };
+  const pullSorterValue = (sorterName, sorterValue) => {
+    fetch("http://localhost:8000/api/remove_category_filter_value", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({categoryName, sorterName, sorterValue})
+    })
+    .then(response => response.json())
+    .then((res) => {
+      setCategoryData(res.categoryData)
+    })
+    .catch((error) => console.log(error));
+  }
 
   if (categoryData) {
     return (
@@ -266,7 +233,9 @@ const EditCategoryRoute = () => {
                     <SorterItem
                       sorterData={current}
                       categoryName={categoryName}
-                      pullSorter_={pullSorter}
+                      pushSorterValue={pushSorterValue}
+                      pullSorter={pullSorter}
+                      pullSorterValue={pullSorterValue}
                       key={index}
                     />
                   ))

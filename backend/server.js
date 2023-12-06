@@ -137,7 +137,7 @@ app.post("/api/remove_category_filter", async (req, res) => {
     const { categoryName, sorterName_ } = req.body;
 
     // Eliminar el filtro de la 
-    await AdminSchema.updateOne(
+    const admin = await AdminSchema.findOneAndUpdate(
       {},
       {
         $pull: {
@@ -155,8 +155,9 @@ app.post("/api/remove_category_filter", async (req, res) => {
       {"categories.categoryName": categoryName},
       {$pull: {"categories.$.selectedValues": {sorterName: sorterName_}}}
     )
- 
-    res.status(200).json({ message: "request received" });
+    
+    const categoryData = admin.categories.find(elem => elem.name === categoryName)
+    res.status(200).json({ message: "request received", categoryData });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal error has ocurred" });
@@ -168,7 +169,7 @@ app.post("/api/remove_category_filter", async (req, res) => {
 app.post("/api/create_category_filter_value", async (req, res) => {
   const { categoryName, sorterName, newValue } = req.body;
   try {
-    await AdminSchema.updateOne(
+    const admin = await AdminSchema.findOneAndUpdate(
       // Unico esquema de admin
       {},
       //Usar ArrayFilters de mongoose para acceder a un valor especifico en un sorter especifico dentro de una categoria especifica
@@ -186,8 +187,9 @@ app.post("/api/create_category_filter_value", async (req, res) => {
         new: true, //Retornar el nuevo valor
       }
     );
+    const categoryData = admin.categories.find(elem => elem.name === categoryName)
 
-    res.status(200).json({ message: "request received" });
+    res.status(200).json({ message: "request received", categoryData});
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal error has ocurred" });
@@ -198,7 +200,7 @@ app.post("/api/create_category_filter_value", async (req, res) => {
 app.post("/api/remove_category_filter_value", async (req, res) => {
   const { categoryName, sorterName, sorterValue } = req.body;
   try {
-    await AdminSchema.updateOne(
+    const admin = await AdminSchema.findOneAndUpdate(
       // Unico esquema de admin
       {},
       //Usar ArrayFilters de mongoose para acceder a un valor especifico en un sorter especifico dentro de una categoria especifica
@@ -223,7 +225,9 @@ app.post("/api/remove_category_filter_value", async (req, res) => {
       {$pull: {"categories.$.selectedValues": {sorterName: sorterName}}}
     )
 
-    res.status(200).json({ message: "request received" });
+    const categoryData = admin.categories.find(elem => elem.name === categoryName)
+
+    res.status(200).json({ message: "request received", categoryData });
   } catch (error) {
     console.log(error);
   }
