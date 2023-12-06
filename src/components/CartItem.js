@@ -1,6 +1,6 @@
 import "../styleSheets/CartItem.css";
 
-const CartItem = ({productData}) => {
+const CartItem = ({productData, addition, subtraction}) => {
   return (
     <div className="cart-item-main">
       <div className="cart-item">
@@ -10,9 +10,9 @@ const CartItem = ({productData}) => {
           <p className="cart-item-price">USD {productData.price}</p>
         </div>
         <div className="cart-item-amount">
-          <button>+</button>
-          <p className="cart-item-counter">1</p>
-          <button>-</button>
+          <button onClick={addition}>+</button>
+          <p className="cart-item-counter">{productData.ammount}</p>
+          <button onClick={subtraction}>-</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,50 @@
+.category-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 10px 0 10px;
+
+    cursor: pointer;
+
+    font-size: 26px;
+    color: rgba(0, 0, 0, 0.5)
+}
+
+.category-main img {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    object-fit: contain;
+}
+
+.category-main:hover {
+    animation-name: category-hover;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+.category-main:not(:hover) {
+    animation-name: category-not-hover;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes category-hover {
+    0% {
+        color: rgba(0, 0, 0, 0.5)
+    }
+    100% {
+        color: black
+    }
+}
+@keyframes category-not-hover {
+    0% {
+        color: black
+    }
+    100% {
+        color: rgba(0, 0, 0, 0.5)
+    }
+}

@@ -1,0 +1,243 @@
+.category-route-main header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    width: 100%;
+    height: 70px;
+  
+    background-color: rgb(226, 226, 226);
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+  }
+  .category-route-main header h2 {
+    margin-left: 80px;
+  }
+
+  .category-route-main main {
+    display: flex;
+  }
+
+  /* GENERAL */
+
+  .category-route-main main input {
+    padding: 5px;
+    margin-left: 5px;
+  
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(213, 213, 213);
+  }
+
+  /* FILTER PANEL */
+  /* FILTER PANEL */
+  /* FILTER PANEL */
+
+  .category-route-filter-panel {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 300px;
+    height: 100%;
+  }
+  .apply-filters-button {
+    margin-left: 10px;
+    padding: 5px;
+    width: 130px;
+  
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(226, 226, 226);
+  
+    cursor: pointer;
+  }
+  .apply-filters-button:hover {
+    animation-name: button-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  .apply-filters-button:not(:hover) {
+    animation-name: button-not-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  @keyframes button-hover {
+    0% {
+      background-color: rgb(226, 226, 226);
+    }
+    100% {
+      background-color: rgb(189, 189, 189);
+    }
+  }
+  @keyframes button-not-hover {
+    0% {
+      background-color: rgb(189, 189, 189);
+    }
+    100% {
+      background-color: rgb(226, 226, 226);
+    }
+  }
+
+  .category-route-filter-title {
+    font-size: 24px;
+    margin-top: 25px;
+
+    color: rgba(67, 23, 23, 0.5);
+  }
+  .category-route-price-filter {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    margin-top: 20px;
+    width: 100%;
+  }
+  .category-route-price-filter-one {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .category-route-price-filter-one svg{
+    font-size: 28px;
+    margin: 5px 5px 10px 5px;
+
+    cursor: pointer;
+  }
+
+  .category-route-sorters-container {
+    margin-top: 20px;
+  }
+  .category-route-sorters-container div {
+    margin-bottom: 25px;
+  }
+  .category-route-sorters-container p {
+    font-size: 18px;
+  }
+  .sorter-not-active {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.5);
+
+    width:fit-content;
+  }
+  .sorter-not-active:hover {
+    animation-name: li-hover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+  .sorter-not-active:not(:hover) {
+    animation-name: li-not-hover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes li-hover {
+    0% {
+      margin-left: 0;
+      color: rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      margin-left: 3px;
+      color: black;
+    }
+  }
+  @keyframes li-not-hover {
+    0% {
+      margin-left: 3px;
+      color: black;
+    }
+    100% {
+      margin-left: 0;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .sorter-active {
+    margin-left: 3px;
+    color: black;
+    width: fit-content;
+    cursor: pointer;
+   }
+
+
+  /* MAIN SECTION */
+  /* MAIN SECTION */
+  /* MAIN SECTION */
+
+  .category-route-main section {
+    margin: 0 15px 0 15px;
+    width: 100%;
+  }
+  .category-route-no-products-alert {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+
+  /* BROWSER */
+  /* BROWSER */
+  /* BROWSER */
+
+  .category-route-browser {
+    display: flex;
+    justify-content: center;
+
+    height: 70px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .category-route-browser input {
+    width: 650px;
+    height: 30px;
+    padding: 0 15px 0 15px;
+
+    border: none;
+    border-radius: 10px 0 0 10px;
+    background-color: rgb(226, 226, 226);
+  }
+
+  .category-route-browser button {
+    width: 100px;
+    height: 30px;
+    padding: 0 15px 0 15px;
+    margin-left: 5px;
+
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background-color: rgb(226, 226, 226);
+
+    cursor: pointer;
+}
+.category-route-browser button:hover {
+    animation-name: button-hover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+.category-route-browser button:not(:hover) {
+    animation-name: button-not-hover;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes button-hover {
+    0% {
+        background-color: rgb(226, 226, 226);
+    }
+    100% {
+        background-color: rgb(189, 189, 189);
+    }
+}
+@keyframes button-not-hover {
+    0% {
+        background-color: rgb(189, 189, 189);
+        }
+    100% {
+        background-color: rgb(226, 226, 226);
+        }
+}
+  
+  .category-route-products-container {
+    display: flex;
+    flex-wrap: wrap;
+  }

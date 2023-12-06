@@ -67,6 +67,33 @@
   }
 }
 
+/* CATEGORIES */
+
+.admin-panel-categories-main {
+  display: flex;
+  flex-direction: column;
+
+  width: 90%;
+  margin-bottom: 70px;
+}
+.admin-panel-categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  width: 100%;
+}
+.admin-panel-categories-container {
+  display: flex;
+  overflow-x: scroll;
+
+  width: 50%;
+  margin-left: 30px;
+}
+
+
+/* PRODUCTS */
+
 .admin-panel-products-container {
   display: flex;
   justify-content: center;

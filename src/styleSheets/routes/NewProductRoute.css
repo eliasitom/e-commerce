@@ -214,6 +214,7 @@
   border: none;
   border-radius: 20px;
   background-color: rgb(213, 213, 213);
+  font-size: 16px;
 }
 
 /* TAGS */
@@ -239,6 +240,9 @@
 
   background-color: rgb(213, 213, 213);
   border-radius: 20px;
+}
+.new-product-tag p {
+  margin: 0;
 }
 .new-product-remove-button {
   margin-left: 5px;
@@ -279,6 +283,13 @@
   }
 }
 
+/* CATEGORIES */
+
+.new-product-categories-main {  
+  margin-top: 50px;
+}
+
+
 /* CHARACTERISTICS */
 
 .new-product-characteristics-main {
@@ -292,7 +303,7 @@
   display: flex;
   flex-direction: row;
 
-  margin-bottom: 60px;
+  margin: 20px 0 60px 0;
 }
 .new-product-characteristic {
   display: flex;
@@ -317,6 +328,7 @@
   padding-left: 20px;
 }
 .new-product-characteristic-value div {
+  height: 19px;
   display: flex;
 }
 

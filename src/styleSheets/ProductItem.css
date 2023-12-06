@@ -4,10 +4,9 @@
     align-items: center;
     flex-direction: column;
 
-    overflow: hidden;
 
-    width: 300px;
-    height: 370px;
+    width: 200px;
+    height: 270px;
     margin: 10px 15px 0 15px;
     padding: 10px 0 10px 0;
 
@@ -51,15 +50,13 @@
     margin-top: 5px;
 
     text-align: center;
-    font-size: 18px;
+    font-size: 14px;
 }
 .product-item img {
-    width: 270px;
-    height: 271px;
+    width: 170px;
+    height: 171px;
     margin-bottom: 5px;
     object-fit: contain;
-
-    border-bottom: solid rgba(0, 0, 0, 0.2) 1px;
 }
 .product-item-price {
     margin-top: 15px;

@@ -13,22 +13,53 @@ import { CartContext } from "./context/CartContext";
 import { useContext } from "react";
 
 const StepOne = () => {
-  const { cartProducts } = useContext( CartContext )
+  const { cartProducts, setCartProducts } = useContext( CartContext )
+
+  //Manejar cantidad (suma y resta)
+  const handleAmmount = (productId, addition) => {
+    const newCartProducts = cartProducts.map(current => {
+      if(current._id === productId) {
+        //la propiedad ammount de los productos se establece cuando se agrega el producto al carrito desde ProductRoute
+        addition ? current.ammount++ : current.ammount--
+      }
+      return current
+    })
+    setCartProducts(newCartProducts)
+  }
+
+  const removeProduct = (productId) => {
+    const newCartProducts = cartProducts.filter(current => current._id !== productId)
+    setCartProducts(newCartProducts)
+  }
 
   return (
     <div className="cart-s1-main">
-      <button onClick={() => console.log(cartProducts)}>test</button>
-      <p className="cart-s1-title">shopping cart</p>
       <section>
         <div className="cart-container">
-          {
+          { cartProducts.length > 0 ?
             cartProducts.map((current, index) => (
-              <CartItem key={index} productData={current}/>
-            ))
+              <CartItem 
+              key={index} 
+              productData={current} 
+              addition={() => handleAmmount(current._id, true)} 
+              subtraction={() => {
+                if(current.ammount > 1)   handleAmmount(current._id, false);
+                else removeProduct(current._id)
+              }}/>
+            )) : undefined
           }
         </div>
         <div className="cart-bill">
           <p className="bill-title">factura</p>
+
+          { cartProducts.length > 0 ?
+            cartProducts.map((current, index) => (
+              <div key={index} className="bill-item">
+                <p className="bill-item-name">{current.name}</p>
+                <p className="bill-item-price">{`x${current.ammount} - USD ${current.price * current.ammount},00`}</p>
+              </div>
+            )) : undefined
+          }
         </div>
       </section>
     </div>
@@ -60,6 +91,15 @@ const Cart = () => {
       </div>
       {navEnabled ? <NavBar close={() => setNavEnabled(false)} /> : undefined}
 
+      <main>
+      <header>
+        <h2 className="cart-main-title">Carrito de compras</h2>
+        <div>
+          <p className={step === 1 ? "current-step" : ""}>PASO 1</p>
+          <p className={step === 2 ? "current-step" : ""}>PASO 2</p>
+          <p className={step === 3 ? "current-step" : ""}>PASO 3</p>
+        </div>
+      </header>
       {step === 1 ? (
         <StepOne />
       ) : step === 2 ? (
@@ -68,6 +108,7 @@ const Cart = () => {
           <button>submit</button>
         </form>
       ) : undefined}
+      </main>
     </div>
   );
 };

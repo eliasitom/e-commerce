@@ -1,0 +1,249 @@
+.edit-category-route-main {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100vh;
+}
+
+
+/* HEADER */
+  
+.edit-category-route-main header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 70px;
+  margin-bottom: 50px;
+
+  background-color: rgb(226, 226, 226);
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+}
+.edit-category-route-main header h2 {
+  margin-left: 80px;
+}
+
+
+/* SECTION 1 */
+
+.edit-category-main-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 30%;
+}
+.edit-category-main-data img {
+  width: 50%;
+  margin: 30px 0 30px 0;
+}
+.edit-category-main-data h2 {
+  font-size: 28px;
+}
+
+/* SECTION 2 SORTERS */
+
+.edit-category-secondary-data {
+  width: 70%;
+}
+
+.edit-category-route-sorters-header p{
+  color: rgba(0, 0, 0, 0.4);
+}
+.edit-category-route-sorters-header h2 {
+  color: rgba(0, 0, 0, 0.4);
+}
+.edit-category-route-sorters-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+
+  width: 90%;
+  height: 300px;
+}
+
+.sorter-item-creator {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 200px;
+  width: auto !important;
+  height: 90%;
+  margin: 0 10px 0 10px;
+
+  background-color: rgb(243, 243, 243);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.sorter-item-creator form {
+  display: flex;
+  flex-direction: column;
+
+  width: 90%;
+  height: 100%;
+  margin-left: 10px;
+}
+
+.sorter-item {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 200px;
+  width: auto !important;
+  height: 90%;
+  margin: 0 10px 0 10px;
+
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+.sorter-item-name {
+  height: 15%;
+  width: 90% !important;
+  margin: 5px 10px 0 10px;
+
+  font-size: 26px;
+  overflow: hidden;
+}
+.sorter-item-header {
+  display: flex;
+  align-items: center;
+
+  height: 15%;
+  width: 90% !important;
+  margin: 5px 10px 10px 10px;
+
+  font-size: 26px;
+  overflow: hidden;
+}
+.sorter-item-header p {
+  width: 80%;
+  overflow: hidden;
+  text-wrap: nowrap;
+
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgba(0, 0, 0, 0.95),
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0)
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sorter-item-header button {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+}
+.sorter-item-confirm {
+  width: auto !important;
+  border: none;
+  border-radius: 10px !important;
+  font-size: 16px;
+  cursor: pointer;
+}
+.sorter-item-confirm:hover {
+  animation-name: remove-characteristic-button-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+.sorter-item-confirm:not(:hover) {
+  animation-name: remove-characteristic-button-not-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+
+.sorter-item-values {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 50%;
+}
+.sorter-item-value {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 50px 10px 20px;
+}
+
+.sorter-item form {
+  width: 100%;
+  height: 30%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sorter-item form input,
+.sorter-item-creator input {
+  padding: 5px;
+  width: 90%;
+
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(213, 213, 213);
+}
+.sorter-item form button,
+.sorter-item-creator button {
+  margin-top: 5px;
+  padding: 5px;
+  width: 90%;
+
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(226, 226, 226);
+
+  cursor: pointer;
+}
+.sorter-item form button:hover,
+.sorter-item-creator form button {
+  animation-name: button-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+.sorter-item form button:not(:hover),
+.sorter-item-creator form button:not(:hover) {
+  animation-name: button-not-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+@keyframes button-hover {
+  0% {
+    background-color: rgb(226, 226, 226);
+  }
+  100% {
+    background-color: rgb(189, 189, 189);
+  }
+}
+@keyframes button-not-hover {
+  0% {
+    background-color: rgb(189, 189, 189);
+  }
+  100% {
+    background-color: rgb(226, 226, 226);
+  }
+}
+
+
+/* SECTION 2 PRODUCTS */
+
+.edit-category-route-products {
+  margin-top: 40px;
+}
+.edit-category-route-products h2 {
+  color: rgba(0, 0, 0, 0.4)
+}
+.edit-category-route-products-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+
+  width: 90%;
+  height: 320px;
+}

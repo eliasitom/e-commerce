@@ -1,57 +1,45 @@
-import { useState } from "react";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Browser from "./components/Browser"
-import NavBar from "./components/NavBar"
-import PromotionsPanel from "./components/PromotionsPanel"
-import TopProduct from "./components/TopProduct"
+import { CartProvider } from "./components/context/CartContext";
 
-import { HiBars3 } from "react-icons/hi2"
+import HomeRoute from "./components/routes/HomeRoute";
+import Cart from "./components/Cart";
+import NewProductRoute from "./components/routes/NewProductRoute";
+import EditProductRoute from "./components/routes/EditProductRoute";
+import ProductRoute from "./components/routes/ProductRoute";
+import CategoryRoute from "./components/routes/CategoryRoute";
+import AdminPanel from "./components/admin/AdminPanel";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import EditCategoryRoute from "./components/routes/EditCategoryRoute";
+const stripePromise = loadStripe(
+  "pk_test_51NKXVtClsAsxOkqgaJKNlARctarfnSQ3aPwmm0cqODRmN5gMOh2mEXf3EoSRORRRPxnWPysd4TX942IipeMVOuTo00W0Xg6qOa"
+);
 
 function App() {
-  const [navEnabled, setNavEnabled] = useState(false)
-
   return (
-    <div className="App">
-      <div className="nav-svg" onClick={() => setNavEnabled(true)}>
-          <HiBars3 />
-        </div>
-      {navEnabled ? <NavBar close={() => setNavEnabled(false)}/> : undefined}
-      <div>
-        <Browser />
-        <hr />
-        <div className="top-products">
-          <p className="top-products-title">lo más vendido</p>
-          <div className="top-products-container">
-            <TopProduct
-              title={"Notebook Lenovo 15ITL05"}
-              description={
-                "Notebook Lenovo 15ITL05 i3-1115G4 256GB 8GB 15.6 Touch"
-              }
-              img={"OIP.jpg"}
-              price={589}
-            />
-            <TopProduct
-              title={"Monitor Gamer MSI Optix"}
-              description={'Monitor Gamer MSI Optix G273 27" FHD 165Hz G-Sync'}
-              img={"monitor0.jpg"}
-              price={359}
-            />
-            <TopProduct
-              title={"Torre Gamer Intel Core i5"}
-              description={
-                "Torre Gamer Intel Core i5-10400 512GB 16GB GTX1630 Win 11"
-              }
-              img={"PC.jpg"}
-              price={1049}
-            />
-          </div>
-        </div>
-        <hr />
-        <PromotionsPanel />
-        <hr />
-      </div>
-    </div>
+    <BrowserRouter>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<HomeRoute />} />
+          <Route
+            path="/cart"
+            element={
+              <Elements stripe={stripePromise}>
+                <Cart />
+              </Elements>
+            }
+          />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/new_product" element={<NewProductRoute />} />
+          <Route path="/admin/edit_product/:productId" element={<EditProductRoute />} />
+          <Route path="/admin/edit_category/:category" element={<EditCategoryRoute />} />
+          <Route path="/product/:productId" element={<ProductRoute />} />
+          <Route path="/products/:category" element={<CategoryRoute />} />
+        </Routes>
+      </CartProvider>
+    </BrowserRouter>
   );
 }
 

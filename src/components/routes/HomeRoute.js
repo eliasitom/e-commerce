@@ -1,15 +1,60 @@
-import { useState } from "react";
 import "../../styleSheets/routes/HomeRoute.css";
 
-import Browser from "./components/Browser"
-import NavBar from "./components/NavBar"
-import PromotionsPanel from "./components/PromotionsPanel"
-import TopProduct from "./components/TopProduct"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Browser from "../Browser"
+import NavBar from "../NavBar"
+import PromotionsPanel from "../PromotionsPanel"
+import TopProduct from "../TopProduct"
+import ProductsSlider from "../ProductsSlider";
 
 import { HiBars3 } from "react-icons/hi2"
+import useCategories from "../../customHooks/useCategories";
+import Category from "../Category";
 
 function HomeRoute() {
+  const navigate = useNavigate()
+
   const [navEnabled, setNavEnabled] = useState(false)
+
+  const [onSaleProducts, setOnSaleProducts] = useState([])
+  const [bestSellerProducts, setBestSellerProducts] = useState([])
+
+  const categories = useCategories()
+  
+  useEffect(() => {
+        // Obtener productos en oferta
+        try {
+          fetch(`http://localhost:8000/api/get_products_on_sale`, {
+            method: "GET",
+            headers: { "Content-Type": "appliaction/json" },
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              setOnSaleProducts(res);
+            })
+            .catch((err) => console.log(err));
+        } catch (error) {
+          console.log(error);
+        }
+    
+        // Obtener productos más vendidos
+        try {
+          fetch(`http://localhost:8000/api/get_best_seller_products`, {
+            method: "GET",
+            headers: { "Content-Type": "appliaction/json" },
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              setBestSellerProducts(res);
+            })
+            .catch((err) => console.log(err));
+        } catch (error) {
+          console.log(error);
+        }
+  }, [])
+
 
   return (
     <div className="App">
@@ -23,34 +68,25 @@ function HomeRoute() {
         <div className="top-products">
           <p className="top-products-title">lo más vendido</p>
           <div className="top-products-container">
-            <TopProduct
-              title={"Notebook Lenovo 15ITL05"}
-              description={
-                "Notebook Lenovo 15ITL05 i3-1115G4 256GB 8GB 15.6 Touch"
-              }
-              img={"OIP.jpg"}
-              price={589}
-            />
-            <TopProduct
-              title={"Monitor Gamer MSI Optix"}
-              description={'Monitor Gamer MSI Optix G273 27" FHD 165Hz G-Sync'}
-              img={"monitor0.jpg"}
-              price={359}
-            />
-            <TopProduct
-              title={"Torre Gamer Intel Core i5"}
-              description={
-                "Torre Gamer Intel Core i5-10400 512GB 16GB GTX1630 Win 11"
-              }
-              img={"PC.jpg"}
-              price={1049}
-            />
+            {
+              bestSellerProducts.map((current, index) => (
+                <TopProduct key={index} title={current.name} img={current.images[0]} price={current.price} onClick={() => navigate(`/product/${current._id}`)}/>
+              ))
+            }
           </div>
         </div>
         <hr />
         <PromotionsPanel />
         <hr />
-      </div>
+        <div className="home-categories-container">
+          {
+            categories.length > 0 ?
+            categories.map((current, index) => (
+              <Category key={index} name={current.name} image={current.image} onClick={() => navigate(`/products/${current.name}`)}/>
+            )) : undefined
+          }
+        </div>
+      </div> 
     </div>
   );
 }

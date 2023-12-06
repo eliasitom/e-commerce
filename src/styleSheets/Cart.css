@@ -6,6 +6,32 @@
   margin: 0 150px 0 150px;
 }
 
+.cart-main main {
+  width: 100%;
+  height: 100%;
+}
+.cart-main header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin-top: 10px;
+}
+.cart-main-title {
+  font-size: 38px;
+}
+.cart-main header div {
+  display: flex;
+}
+.cart-main header div p {
+  margin-right: 20px;
+  font-size: 18px;
+}
+.current-step {
+  border-bottom: 1px solid black;
+}
+
+
 /* STEP 1 */
 
 .cart-s1-main {
@@ -14,11 +40,6 @@
 }
 .cart-s1-main section {
   display: flex;
-}
-
-.cart-s1-title {
-  margin-top: 20px;
-  font-size: 38px;
 }
 
 .cart-container {
@@ -37,9 +58,21 @@
   border-left: solid rgba(0, 0, 0, 0.5) 1px;
 }
 .bill-title {
-    font-size: 28px;
-    color: rgba(0, 0, 0, 0.5);
     margin-left: 30px;
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+.bill-item {
+  margin: 0 0 20px 30px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.bill-item-name {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+}
+.bill-item-price {
+  margin-left: 20px;
+  color: black;
 }
 
 @media only screen and (max-width: 900px) {
@@ -50,16 +83,15 @@
     margin: 0;
     height: 100vh;
   }
+  .cart-main header {
+    margin-left: 15px;
+  }
 
   /* STEP 1 */
   .cart-s1-main section {
     flex-direction: column;
   }
-  .cart-s1-title {
-    width: 100%;
 
-    text-align: center;
-  }
   .cart-container {
     width: 100%;
     height: 80%;
@@ -74,5 +106,7 @@
 
     width: 100%;
     height: 200px;
+    margin-top: 40px;
+    padding: 40px 0 40px 0;
   }
 }

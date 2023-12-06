@@ -5,8 +5,9 @@
   border: none;
   border-radius: 10px;
   background-color: rgb(226, 226, 226);
-
   cursor: pointer;
+
+  text-align: center !important;
 }
 .button-component p {
   font-size: 18px;

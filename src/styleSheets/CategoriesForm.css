@@ -1,0 +1,134 @@
+.categories-form-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.categories-form-main form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 600px;
+  padding: 20px;
+  margin: 10px 0 20px 0;
+
+  background-color: rgb(226, 226, 226);
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.categories-form-title {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.6);
+
+  margin-bottom: 10px;
+}
+.categories-form-main label {
+  margin: 5px 0 5px;
+}
+.categories-form-main input {
+  padding: 5px;
+  margin-left: 5px;
+
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(202, 202, 202);
+}
+.categories-form-main img {
+    width: 100px;
+    border-radius: 50px;
+}
+
+.categories-form-button {
+  margin-left: 10px;
+  padding: 5px;
+  width: 80px;
+
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(202, 202, 202);
+
+  cursor: pointer;
+}
+.categories-form-button:hover {
+  animation-name: button-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+.categories-form-button:not(:hover) {
+  animation-name: button-not-hover;
+  animation-fill-mode: forwards;
+  animation-duration: 0.5s;
+}
+@keyframes button-hover {
+  0% {
+    background-color: rgb(202, 202, 202);
+  }
+  100% {
+    background-color: rgb(183, 183, 183);
+  }
+}
+@keyframes button-not-hover {
+  0% {
+    background-color: rgb(183, 183, 183);
+  }
+  100% {
+    background-color: rgb(202, 202, 202);
+  }
+}
+
+.sorters-container {
+  display: flex;
+  justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.category-sorter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  width: auto;
+  margin: 10px 10px 0 0;
+  padding: 5px;
+
+  background-color: rgb(226, 226, 226);
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+.category-sorter button {
+  margin-left: 5px;
+
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50px;
+}
+.category-sorter button:hover {
+  animation-name: remove-button-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.category-sorter button:not(:hover) {
+  animation-name: remove-button-not-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes remove-button-hover {
+  0% {
+    background-color: white;
+  }
+  100% {
+    font-weight: bold;
+    background-color: rgb(202, 111, 111);
+  }
+}
+@keyframes remove-button-not-hover {
+  0% {
+    font-weight: bold;
+    background-color: rgb(202, 111, 111);
+  }
+  100% {
+    background-color: white;
+  }
+}
