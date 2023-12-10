@@ -76,7 +76,6 @@
   
     width: 100%;
     height: 70px;
-    margin-bottom: 50px;
   
     background-color: rgb(226, 226, 226);
     box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
@@ -84,7 +83,56 @@
   .new-product-page header h2 {
     margin-left: 80px;
   }
+
+  /* ASIDE */
   
+  .new-product-save-button {
+    padding: 5px;
+    width: 180px;
+    height: 40px;
+    margin-left: 15px;
+  
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(226, 226, 226);
+    font-size: 18px;
+  
+    cursor: pointer;
+  }
+  .edit-product-delete-button {
+    padding: 5px;
+    width: 180px;
+    height: 40px;
+
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(226, 226, 226);
+    font-size: 18px;
+  
+    cursor: pointer;
+  }
+
+  .new-product-save-button:hover {
+    animation-name: button-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  .new-product-save-button:not(:hover) {
+    animation-name: button-not-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  .edit-product-delete-button:hover {
+    animation-name: remove-characteristic-button-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+  .edit-product-delete-button:not(:hover) {
+    animation-name: remove-characteristic-button-not-hover;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+  }
+
   /* FORM ONE */
   
   .new-product-form-one {

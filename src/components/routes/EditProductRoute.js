@@ -76,6 +76,8 @@ const EditProductRoute = () => {
   const [bestSeller, setBestSeller] = useState(false);
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
 
+  const [confirmMode, setConfirmMode] = useState(false) //Confirm mode para eliminar el producto
+
   // Obtener productData
   useEffect(() => {
     fetch(`http://localhost:8000/api/get_product/${productId}`, {
@@ -166,6 +168,30 @@ const EditProductRoute = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  // Timeout para eliminar producto
+  const deleteProductTimeout = () => {
+    setConfirmMode(true)
+
+    let timer = 3
+
+    setTimeout(() => {
+      if(timer === -1) {
+        setConfirmMode(false)
+      } else timer--
+    }, 1000);
+  }
+
+  //Eliminar producto
+  const deleteProduct = () => {
+    fetch(`http://localhost:8000/api/delete_product/${productId}`, {
+      method: "DELETE"
+    })
+    .then(() => {
+      navigate("/admin")
+    })
+    .catch(err => console.log(err))
+  }
 
   // tags
 
@@ -284,6 +310,16 @@ const EditProductRoute = () => {
             / editar producto
           </h2>
         </header>
+        
+        <aside>
+          {
+            confirmMode ?
+            <button className="edit-product-delete-button" onClick={() => deleteProduct()}>Confirmar</button> :
+            <button className="edit-product-delete-button" onClick={() => deleteProductTimeout()}>Eliminar producto</button>
+          }
+          <button className="new-product-save-button" onClick={sendChanges}>Guardar cambios</button>
+        </aside>
+
         <section className="new-product-form-one">
           <div className="new-product-main-data">
             <h4 className="new-product-subtitle">Información general</h4>
@@ -522,11 +558,6 @@ const EditProductRoute = () => {
               </div>
             </div>
           </div>
-          <ButtonComponent
-            child={"Guardad cambios"}
-            margin={{ bottom: "200px", top: "100px" }}
-            onClick={sendChanges}
-          />
         </section>
       </div>
     );

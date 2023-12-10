@@ -94,7 +94,8 @@ const NewProductRoute = () => {
 
   const [currentCategory, setCurrentCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [categoryAlert, setCategoryAlert] = useState(true);
+
+  const [confirmMode, setConfirmMode] = useState(false) //Confirmar la cancelacion del producto
 
   // hacer el fetching de datos
   const createProduct = () => {
@@ -136,6 +137,18 @@ const NewProductRoute = () => {
       setImagesAlert(false);
     }
   };
+
+  // Timeout para confirmar cancelacion
+  const confirmTimeout = () => {
+    setConfirmMode(true)
+
+    let timer = 3
+
+    setTimeout(() => {
+      if(timer === -1) setConfirmMode(false)
+      else timer--
+    }, 1000);
+  }
 
   // tags
 
@@ -243,6 +256,16 @@ const NewProductRoute = () => {
           / crear producto
         </h2>
       </header>
+
+      <aside>
+        {
+          !confirmMode ?
+          <button className="edit-product-delete-button" onClick={confirmTimeout}>Cancelar</button> :
+          <button className="edit-product-delete-button" onClick={() => navigate("/admin")}>Confirmar</button>
+        }
+        <button className="new-product-save-button" onClick={createProduct}>Crear producto</button>
+      </aside>
+
       <section className="new-product-form-one">
         <div className="new-product-main-data">
           <h4 className="new-product-subtitle">Información general</h4>
@@ -417,7 +440,6 @@ const NewProductRoute = () => {
             </div>
           </div>
         </form>
-        <ButtonComponent child={"Crear producto"} onClick={createProduct} />
       </section>
     </div>
   );

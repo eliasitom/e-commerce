@@ -79,6 +79,35 @@ app.post("/api/send_category", upload.single("image"), async (req, res) => {
   }
 });
 
+//Eliminar categoria
+app.delete("/api/delete_category/:category_id", async (req, res) => {
+  try {
+    const categoryId = req.params.category_id
+    let categoryData
+
+    const admin = await AdminSchema.findOne({})
+    categoryData = admin.categories.filter(current => categoryId === current._id.toString())[0]
+
+    //Eliminar categoria de adminSchema
+    await AdminSchema.findOneAndUpdate({}, {$pull: {categories: {_id: categoryId}}})
+
+    //Eliminar categoria de los productos
+    await ProductSchema.updateMany(
+      {"categories.categoryName": categoryData.name},
+      {$pull: {categories: {categoryName: categoryData.name}}}
+    )
+
+    //Eliminar la imagen de la categoria de la carpeta uploads
+    fs.unlinkSync("uploads/categories/" + categoryData.image.split("/").pop());
+
+    
+    res.status(200).send("request received")
+  } catch (error) {
+    console.log(error)
+    res.status(500).send("Internal error has ocurred")
+  }
+})
+
 // Obtener categorias
 app.get("/api/get_categories", async (req, res) => {
   try {
@@ -255,6 +284,28 @@ app.post("/api/create_product", upload.array("images"), async (req, res) => {
     res.status(500).json({ message: "internal error has ocurred" });
   }
 });
+
+//Eliminar producto
+app.delete("/api/delete_product/:product_id", async (req, res) => {
+  try {
+    const productId = req.params.product_id
+
+    //Eliminar imagenes
+    const product = await ProductSchema.findOne({_id: productId})
+    product.images.forEach(currentImg => {
+      fs.unlinkSync("uploads/" + currentImg.split("/").pop())
+    });
+
+    //Eliminar producto
+    await ProductSchema.deleteOne({_id: productId})
+
+    res.status(200).send("request received")
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).send("internal error has ocurred")
+  }
+})
 
 // Actualizar producto
 app.post("/api/update_product", upload.array("newImages"), async (req, res) => {

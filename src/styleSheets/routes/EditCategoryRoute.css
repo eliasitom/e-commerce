@@ -43,6 +43,92 @@
   font-size: 28px;
 }
 
+.edit-category-options {
+  margin-top: 20px;
+}
+
+.edit-category-delete-cat {
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(226, 226, 226);
+  font-size: 18px;
+  cursor: pointer;
+
+  width: 140px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.edit-category-delete-cat:hover {
+  animation-name: delete-cat-button-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.edit-category-delete-cat:not(:hover) {
+  animation-name: delete-cat-button-not-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.edit-category-edit-cat {
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(226, 226, 226);
+  font-size: 18px;
+  cursor: pointer;
+
+  width: 140px;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.edit-category-edit-cat:hover {
+  animation-name: edit-cat-button-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.edit-category-edit-cat:not(:hover) {
+  animation-name: edit-cat-button-not-hover;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes delete-cat-button-hover {
+  0% {
+    background-color: rgb(226, 226, 226);
+  }
+  100% {
+    background-color: rgb(211, 139, 139);
+  }
+}
+@keyframes delete-cat-button-not-hover {
+  0% {
+    background-color: rgb(211, 139, 139);
+  }
+  100% {
+    background-color: rgb(226, 226, 226);
+  }
+}
+
+@keyframes edit-cat-button-hover {
+  0% {
+    background-color: rgb(226, 226, 226);
+  }
+  100% {
+    background-color: rgb(205, 205, 205);
+  }
+}
+@keyframes edit-cat-button-not-hover {
+  0% {
+    background-color: rgb(205, 205, 205);
+  }
+  100% {
+    background-color: rgb(226, 226, 226);
+  }
+}
+
+
 /* SECTION 2 SORTERS */
 
 .edit-category-secondary-data {

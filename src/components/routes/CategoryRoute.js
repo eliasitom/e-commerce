@@ -76,8 +76,7 @@ const CategoryRoute = () => {
     }
   };
 
-  // Actualizar filteredProducts cuando currentSorters es modificado
-  useEffect(() => {
+  const updateFilteredProducts = () => {
     const newFilteredProducts = products.filter((currentProduct) => {
       // 1º Obtener el indice de la categoria actual
       const currentCategoryIndex = currentProduct.categories.findIndex(
@@ -104,9 +103,15 @@ const CategoryRoute = () => {
 
     // 4º Actualizar el estado filteredProducts
     setFilteredProducts(newFilteredProducts);
+  }
+
+  // Actualizar filteredProducts cuando currentSorters es modificado
+  useEffect(() => {
+    updateFilteredProducts()
   }, [currentSorters]);
 
   // Gestionar ordenamiento de productos mediante el precio (mayor a menor o viceversa)
+  // el parametro sorter tiene dos valores (higherPrice | lowerPrice)
   const handleSorterByPrice = (sorter) => {
     // En el caso de que no hayan filtros seleccionados (marca, color, almacenamiento...)
     if (currentSorters.length === 0) {
@@ -135,7 +140,8 @@ const CategoryRoute = () => {
       if (sorter === sorterByPrice) {
         //En el caso de que se elimine el filtro por ordenamiento de precio
         setSorterByPrice("");
-        setFilteredProducts([]);
+
+        updateFilteredProducts()
       } else if (sorter === "lowerPrice") {
         //En el caso de que se ordene de menor a mayor
         setSorterByPrice("lowerPrice");

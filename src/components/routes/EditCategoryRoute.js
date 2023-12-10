@@ -135,8 +135,37 @@ const EditCategoryRoute = () => {
 
   const products = useProducts("categories", categoryName)
 
-
   const navigate = useNavigate()
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  
+
+
+  //Al clickear en eliminar categoria hay un timeOut de 3 segundos que te pide confirmacion
+  const confirmTimeOut = () => {
+    let timer = 3;
+    setConfirmDelete(true);
+
+    const intervalRef = setInterval(() => {
+      if (timer === -1) {
+        setConfirmDelete(false);
+        clearInterval(intervalRef);
+      } else {
+        timer--;
+      }
+    }, 1000);
+  };
+
+  const deleteCategory = () => {
+    fetch(`http://localhost:8000/api/delete_category/${categoryData._id}`, {
+      method: "DELETE"
+    })
+    .then(() => {
+      navigate("/admin")
+    })
+    .catch(err => console.log(err))
+  }
 
   // Obtener categoryData
   useEffect(() => {
@@ -214,6 +243,14 @@ const EditCategoryRoute = () => {
         <section className="edit-category-main-data">
           <img src={categoryData.image} />
           <h2>{categoryData.name}</h2>
+          <div className="edit-category-options">
+            {
+              !confirmDelete ? 
+              <button className="edit-category-delete-cat" onClick={() => confirmTimeOut()}>eliminar</button> :
+              <button className="edit-category-delete-cat" onClick={() => deleteCategory()}>confirmar</button>
+            }
+            <button className="edit-category-edit-cat">editar</button>
+          </div>
         </section>
         <section className="edit-category-secondary-data">
 

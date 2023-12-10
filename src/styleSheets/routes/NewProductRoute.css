@@ -76,13 +76,22 @@
 
   width: 100%;
   height: 70px;
-  margin-bottom: 50px;
 
   background-color: rgb(226, 226, 226);
   box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
 }
 .new-product-page header h2 {
   margin-left: 80px;
+}
+
+/* ASIDE */
+
+.new-product-page aside{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 90%;
+  height: 70px;
 }
 
 /* FORM ONE */
