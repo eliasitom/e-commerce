@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { CartProvider } from "./components/context/CartContext";
+import { ProductsProvider } from "./components/context/ProductsContext";
 
 import HomeRoute from "./components/routes/HomeRoute";
 import Cart from "./components/Cart";
@@ -9,6 +9,7 @@ import EditProductRoute from "./components/routes/EditProductRoute";
 import ProductRoute from "./components/routes/ProductRoute";
 import CategoryRoute from "./components/routes/CategoryRoute";
 import AdminPanel from "./components/admin/AdminPanel";
+import ProductsFoundRoute from "./components/routes/ProductsFoundRoute";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -20,7 +21,7 @@ const stripePromise = loadStripe(
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
+      <ProductsProvider>
         <Routes>
           <Route path="/" element={<HomeRoute />} />
           <Route
@@ -37,8 +38,9 @@ function App() {
           <Route path="/admin/edit_category/:category" element={<EditCategoryRoute />} />
           <Route path="/product/:productId" element={<ProductRoute />} />
           <Route path="/products/:category" element={<CategoryRoute />} />
+          <Route path="/products_found" element={<ProductsFoundRoute />} />
         </Routes>
-      </CartProvider>
+      </ProductsProvider>
     </BrowserRouter>
   );
 }

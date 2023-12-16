@@ -9,11 +9,11 @@ import NavBar from "./NavBar";
 import useScreenSize from "../customHooks/useScreenSize";
 import CartItem from "./CartItem";
 
-import { CartContext } from "./context/CartContext";
+import { ProductsContext } from "./context/ProductsContext";
 import { useContext } from "react";
 
 const StepOne = () => {
-  const { cartProducts, setCartProducts } = useContext( CartContext )
+  const { cartProducts, setCartProducts } = useContext( ProductsContext )
 
   //Manejar cantidad (suma y resta)
   const handleAmmount = (productId, addition) => {

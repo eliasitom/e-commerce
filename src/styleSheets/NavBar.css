@@ -1,6 +1,6 @@
 .nav-bar {
-  background-color: rgb(226, 226, 226);
-  box-shadow: -1px 0 10px black;
+  background-color: rgb(246, 246, 246);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 
   position: fixed;
   top: 50%;
@@ -9,27 +9,62 @@
 
   height: 100vh;
   width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
-.nav-bar svg {
-    margin-left: 80%;
-    margin-top: 20px;
-
-    font-size: 22px;
-
-    cursor: pointer;
+.nav-bar h3 {
+  margin-top: 20px;
+  font-size: 26px;
 }
 .nav-bar-fast-browser {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
 
-    margin-top: 20px;
+  width: 80%;
+  height: 50%;
+  padding: 0;
+  margin-top: 20px;
 }
-.nav-bar-fast-browser a {
-    margin: 5px 0 5px 0;
+.nav-bar-fast-browser h4 {
+  font-size: 22px;
+  color: rgba(0,0,0,0.5);
+}
+.nav-bar-fast-browser li {
+  margin: 5px 0 0 55px;
+  font-size: 20px;
 
-    cursor: pointer;
+  cursor: pointer;
+}
+.nav-bar-fast-browser li:hover {
+  animation-name: nav-bar-category-hover;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+.nav-bar-fast-browser li:not(:hover) {
+  animation-name: nav-bar-category-not-hover;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+@keyframes nav-bar-category-hover {
+  0% {
+    margin-left: 55px;
+  }
+  100% {
+    margin-left: 60px;
+  }
+}
+@keyframes nav-bar-category-not-hover {
+  0% {
+    margin-left: 60px;
+  }
+  100% {
+    margin-left: 55px;
+  }
 }
 
 .enabled {
@@ -59,7 +94,6 @@
     left: -400px;
   }
 }
-
 
 @media only screen and (max-width: 900px) {
   .nav-bar {

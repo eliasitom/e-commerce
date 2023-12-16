@@ -438,6 +438,41 @@ app.get("/api/get_best_seller_products", async (req, res) => {
   }
 });
 
+// Obtener productos mediante una busqueda general
+app.get("/api/general_search/:keyword", async (req, res) => {
+  try {
+    const keyword = req.params.keyword
+
+    console.log(keyword)
+
+    //Producto principal: Si keyword = "Iphone 14" el primer elemento que debe retornar es el iphone 14 (siempre y cuando esté entre los documentos)
+    const similarNameProducts = await ProductSchema.find({ name: new RegExp(keyword, "i") })
+
+    //Productos por categoria: Si keyword = "celulares" debe retornar todos los productos que en categoria tengan la categoria "Celulares"
+    const categoryProducts = await ProductSchema.find({ "categories.categoryName": { $regex: new RegExp(keyword, 'i') } })
+
+    //Productos por etiqueta: Si keyword = "apple" debe retornar todos los productos que tengan la etiqueta "apple"
+    const tagsProducts = await ProductSchema.find({tags: { $regex: new RegExp(keyword, 'i') }})
+
+    //Sumar los productos obtenidos de la base de datos
+    let allProductsFound = []
+
+    if(similarNameProducts.length > 0) allProductsFound.push(similarNameProducts)
+    if(categoryProducts.length > 0) allProductsFound.push(categoryProducts)
+    if(tagsProducts.length > 0) allProductsFound.push(tagsProducts)
+
+    allProductsFound = allProductsFound.flat()
+    allProductsFound = allProductsFound.filter((value, index, self) => self.findIndex(obj => obj.name === value.name) === index);
+
+
+    res.status(200).json({products: allProductsFound})
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).send("Internal error has ocurred")
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`server on port ${PORT}...`);
 });

@@ -2,9 +2,31 @@ import "../../styleSheets/routes/NewProductRoute.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useCategories from "../../customHooks/useCategories";
 
-import ButtonComponent from "../ButtonComponent";
 import InputAlert from "../InputAlert";
+import SortersModal from "../SortersModal"
+
+
+//Item del array de todas las categorias 
+const CategoryItem = ({active, categoryData, openModal}) => {
+  return (
+    <div className={`category-item-main ${active ? "category-item-enabled" : "category-item-disabled"}`} >
+      <img src={categoryData.image}/>
+        <p>{categoryData.name}</p>
+        <button className="category-button" onClick={openModal}>abrir</button>
+    </div>
+  )
+}
+
+const OnSaleProduct = ({ productData }) => {
+  return (
+    <div className="on-sale-product">
+      <img src={productData.images[0]} />
+      <h1>{productData.name}</h1>
+    </div>
+  );
+};
 
 const ImageModal = ({ image, submitName, closeModal, deleteImage }) => {
   const [imageName, setImageName] = useState();
@@ -92,8 +114,15 @@ const NewProductRoute = () => {
   const [characteristic, setCharacteristic] = useState("");
   const [characteristicValue, setCharacteristicValue] = useState("");
 
-  const [currentCategory, setCurrentCategory] = useState("");
+  const allCategories = useCategories()
+  const [currentCategory, setCurrentCategory] = useState(""); // Al ser distinto a undefined se abre la ventana modal 
   const [categories, setCategories] = useState([]);
+
+  const [onSale, setOnSale] = useState(false)
+  const [onSaleProducts, setOnSaleProducts] = useState([])
+
+  const [bestSeller, setBestSeller] = useState(false)
+  const [bestSellerProducts, setBestSellerProducts] = useState([])
 
   const [confirmMode, setConfirmMode] = useState(false) //Confirmar la cancelacion del producto
 
@@ -108,8 +137,8 @@ const NewProductRoute = () => {
         tags,
         categories,
         characteristics,
-        onSale: false,
-        bestSeller: false,
+        onSale,
+        bestSeller
       };
 
       //Crear el formData e insertar los datos (productData)
@@ -168,19 +197,15 @@ const NewProductRoute = () => {
 
   // categories
 
-  const submitCategory = (e) => {
-    e.preventDefault();
+  const handleCategories = (newCategory) => {
+      let newCategories = categories.filter(elem => elem.categoryName !== newCategory.categoryName)
+      if(newCategory.active) {
+        newCategories = [...newCategories, newCategory]
+      }
+      setCategories(newCategories)
 
-    if (currentCategory) {
-      setCategories((prev) => [...prev, currentCategory]);
-      setCurrentCategory("");
-    }
-  };
-  const removeCategory = (category) => {
-    const newCategories = categories.filter((current) => current !== category);
-
-    setCategories(newCategories);
-  };
+    setCurrentCategory(undefined)
+  }
 
   // characteristics
 
@@ -235,6 +260,41 @@ const NewProductRoute = () => {
     setImages(newImages);
   };
 
+  useEffect(() => {
+  // Obtener productos en oferta
+    try {
+      fetch(`http://localhost:8000/api/get_products_on_sale`, {
+        method: "GET",
+        headers: { "Content-Type": "appliaction/json" },
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          setOnSaleProducts(res);
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Obtener productos más vendidos
+    try {
+      fetch(`http://localhost:8000/api/get_best_seller_products`, {
+        method: "GET",
+        headers: { "Content-Type": "appliaction/json" },
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          setBestSellerProducts(res);
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [])
+
+
+
+
   return (
     <div
       className="new-product-page"
@@ -248,6 +308,16 @@ const NewProductRoute = () => {
           submitName={(image, imageName) => handleImageName(image, imageName)}
         />
       ) : undefined}
+      {
+        currentCategory ?
+        <SortersModal
+        categoryData={currentCategory}
+        currentCategories={categories}
+        saveCategory={handleCategories}
+        closeModal={() => setCurrentCategory(undefined)}
+        />
+        : undefined
+      }
       <header>
         <h2>
           <a onClick={() => navigate("/admin")} style={{ cursor: "pointer" }}>
@@ -364,35 +434,25 @@ const NewProductRoute = () => {
           ))}
         </div>
 
-        <form className="new-product-categories-main">
-          <label>
-            Agregar categoria
-            <input
-              placeholder="celulares, audio, laptops, software..."
-              onChange={(e) => setCurrentCategory(e.target.value)}
-              value={currentCategory}
-            />
-            <button className="new-product-button" onClick={submitCategory}>
-              añadir
-            </button>
-          </label>
-        </form>
-        <div className="new-product-tags-container">
-          {categories.map((current, index) => (
-            <div key={index} className="new-product-tag">
-              <p>{current}</p>
-              <button
-                className="new-product-remove-button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  removeCategory(current);
-                }}
-              >
-                ×
-              </button>
-            </div>
-          ))}
-        </div>
+        <div className="edit-product-categories">
+            <p>Todas las categorias</p>
+          <div className="edit-product-categories-container">
+          { 
+            allCategories.length > 0 ?
+            allCategories.map((current, index) => (
+             <CategoryItem 
+             key={index} 
+             active={
+              categories.filter(elem => elem.categoryName === current.name).length > 0 ? true : false
+            }
+             categoryData={current} 
+             openModal={() => setCurrentCategory(current)}
+             />
+            ))
+            : undefined
+          }
+          </div>
+          </div>
 
         <form className="new-product-characteristics-main">
           <div className="new-product-characteristic-form">
@@ -441,6 +501,50 @@ const NewProductRoute = () => {
           </div>
         </form>
       </section>
+      <section className="edit-product-tertiary-data">
+          <h4 className="new-product-subtitle">Posicionamiento del producto</h4>
+          <div className="edit-product-on-sale-form">
+            <label>
+              producto en oferta{" "}
+              <input
+                type="checkbox"
+                value={onSale}
+                onChange={(e) => setOnSale(e.target.checked)}
+              />
+            </label>
+            <div>
+              <p style={{ color: "rgba(0, 0, 0, 0.3)" }}>actuales ofertas:</p>
+              <div className="edit-product-another-products">
+                {onSaleProducts.map((current, index) => (
+                  <OnSaleProduct key={index} productData={current} />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            style={{ marginTop: "70px" }}
+            className="edit-product-best-seller-form"
+          >
+            <label>
+              producto más vendido{" "}
+              <input
+                type="checkbox"
+                value={bestSeller}
+                onChange={(e) => setBestSeller(e.target.checked)}
+              />
+            </label>
+            <div>
+              <p style={{ color: "rgba(0, 0, 0, 0.3)" }}>
+                actuales productos más vendidos:
+              </p>
+              <div className="edit-product-another-products">
+                {bestSellerProducts.map((current, index) => (
+                  <OnSaleProduct key={index} productData={current} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
   );
 };

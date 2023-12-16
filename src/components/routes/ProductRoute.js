@@ -7,8 +7,8 @@ import "../../styleSheets/routes/ProductRoute.css";
 
 import ButtonComponent from "../ButtonComponent";
 import ProductItem from "../ProductItem";
-import { CartContext } from "../context/CartContext";
-import { CartModal } from "../CartModal";
+import { ProductsContext } from "../context/ProductsContext";
+import CartModal from "../CartModal";
 
 const ImagesModal = ({ images, closeModal }) => {
   const [current, setCurrent] = useState(0);
@@ -59,7 +59,7 @@ const ProductRoute = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
 
-  const { cartProducts, setCartProducts } = useContext(CartContext);
+  const { cartProducts, setCartProducts } = useContext(ProductsContext);
 
   const [productData, setProductData] = useState();
   const [recommendedProducts, setRecommendedProducts] = useState();
@@ -138,10 +138,14 @@ const ProductRoute = () => {
               <div className="product-header">
                 <h2>{productData.name}</h2>
                 <p className="product-price">USD {productData.price}</p>
-                <ButtonComponent
+                {
+                  cartProducts.filter(current => current.name === productData.name).length > 0 ?
+                  <p className="product-page-in-cart">En el carrito</p> :
+                  <ButtonComponent
                   child={"Agregar al carrito"}
                   onClick={pushToCart}
                 />
+                }
               </div>
             </div>
             <div>

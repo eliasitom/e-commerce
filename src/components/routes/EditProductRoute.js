@@ -32,9 +32,9 @@ const OnSaleProduct = ({ productData }) => {
 };
 
 //Item del array de todas las categorias 
-const CategoryItem = ({categoryData, openModal}) => {
+const CategoryItem = ({active, categoryData, openModal}) => {
   return (
-    <div className="category-item-main">
+    <div className={`category-item-main ${active ? "category-item-enabled" : "category-item-disabled"}`} >
       <img src={categoryData.image}/>
         <p>{categoryData.name}</p>
         <button className="category-button" onClick={openModal}>abrir</button>
@@ -70,10 +70,10 @@ const EditProductRoute = () => {
   const [characteristic, setCharacteristic] = useState("");
   const [characteristicValue, setCharacteristicValue] = useState("");
 
-  const [onSale, setOnSale] = useState(false);
+  const [onSale, setOnSale] = useState(undefined);
   const [onSaleProducts, setOnSaleProducts] = useState([]);
 
-  const [bestSeller, setBestSeller] = useState(false);
+  const [bestSeller, setBestSeller] = useState(undefined);
   const [bestSellerProducts, setBestSellerProducts] = useState([]);
 
   const [confirmMode, setConfirmMode] = useState(false) //Confirm mode para eliminar el producto
@@ -456,7 +456,10 @@ const EditProductRoute = () => {
             allCategories.length > 0 ?
             allCategories.map((current, index) => (
              <CategoryItem 
-             key={index} 
+             key={index}
+             active={
+             categories.filter(elem => elem.categoryName === current.name).length > 0 ? true : false
+             }
              categoryData={current} 
              openModal={() => setCurrentCategory(current)}
              />
@@ -520,11 +523,15 @@ const EditProductRoute = () => {
           <div className="edit-product-on-sale-form">
             <label>
               producto en oferta{" "}
-              <input
+              {
+                onSale !== undefined ?
+                <input
                 type="checkbox"
+                defaultChecked={onSale}
                 value={onSale}
                 onChange={(e) => setOnSale(e.target.checked)}
-              />
+              /> : undefined
+              }
             </label>
             <div>
               <p style={{ color: "rgba(0, 0, 0, 0.3)" }}>actuales ofertas:</p>
@@ -541,11 +548,15 @@ const EditProductRoute = () => {
           >
             <label>
               producto más vendido{" "}
-              <input
+              {
+                bestSeller !== undefined ?
+                <input
                 type="checkbox"
+                defaultChecked={bestSeller}
                 value={bestSeller}
                 onChange={(e) => setBestSeller(e.target.checked)}
-              />
+              /> : undefined
+              }
             </label>
             <div>
               <p style={{ color: "rgba(0, 0, 0, 0.3)" }}>

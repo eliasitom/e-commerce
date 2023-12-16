@@ -115,6 +115,18 @@
 
     font-size: 22px;
 }
+.product-page-in-cart {
+  width: 200px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(226, 226, 226);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .product-description {
     margin-top: 20px;
 }

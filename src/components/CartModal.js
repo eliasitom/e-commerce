@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 import "../styleSheets/CartModal.css"
 
 import ButtonComponent from "./ButtonComponent";
-import { CartContext } from "./context/CartContext";
+import { ProductsContext } from "./context/ProductsContext";
 import { useContext, useState } from "react";
 
 import {BsCart} from "react-icons/bs"
 
-export const CartModal = () => {
-  const { cartProducts } = useContext(CartContext);
+const CartModal = () => {
+  const { cartProducts } = useContext(ProductsContext);
   const navigate = useNavigate()
 
   const [expanded, setExpanded] = useState(false)
@@ -39,3 +39,5 @@ export const CartModal = () => {
     )
   }
 };
+
+export default CartModal

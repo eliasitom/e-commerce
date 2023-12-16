@@ -103,7 +103,6 @@
     padding: 5px;
     width: 180px;
     height: 40px;
-
     border: none;
     border-radius: 10px;
     background-color: rgb(226, 226, 226);
@@ -345,6 +344,10 @@
     align-items: center;
 
     margin: 0 30px 0 0;
+  }
+  .category-item-disabled img{
+    opacity: 0.5;
+    z-index: -1;
   }
   .category-item-main img {
     width: 100px;

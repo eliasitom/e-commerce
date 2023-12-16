@@ -8,15 +8,13 @@ import NavBar from "../NavBar"
 import PromotionsPanel from "../PromotionsPanel"
 import TopProduct from "../TopProduct"
 import ProductsSlider from "../ProductsSlider";
+import CartModal from "../CartModal"
 
-import { HiBars3 } from "react-icons/hi2"
 import useCategories from "../../customHooks/useCategories";
 import Category from "../Category";
 
 function HomeRoute() {
   const navigate = useNavigate()
-
-  const [navEnabled, setNavEnabled] = useState(false)
 
   const [onSaleProducts, setOnSaleProducts] = useState([])
   const [bestSellerProducts, setBestSellerProducts] = useState([])
@@ -58,12 +56,10 @@ function HomeRoute() {
 
   return (
     <div className="App">
-      <div className="nav-svg" onClick={() => setNavEnabled(true)}>
-          <HiBars3 />
-        </div>
-      {navEnabled ? <NavBar close={() => setNavEnabled(false)}/> : undefined}
+      <NavBar />
       <div>
         <Browser />
+        <CartModal />
         <hr />
         <div className="top-products">
           <p className="top-products-title">lo más vendido</p>
